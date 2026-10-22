@@ -50,6 +50,8 @@ class Enlazador:
         return f"archivos/{nombre}"
 
     def __call__(self, href, ruta_actual):
+        if href.strip() in ("", "#"):
+            return None  # enlace vacío: se deja solo el texto
         if href.startswith(("mailto:", "tel:", "#", MARCA)) or not href:
             return href
         u = urlparse(href)
