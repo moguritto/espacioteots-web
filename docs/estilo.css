@@ -234,3 +234,9 @@ h1.como-h4 { font-size: 1.1rem; }
 [style*="--velo:"] > * { position: relative; z-index: 1; }
 [style*="--hd:"]:not(#_) { min-height: var(--hd) !important; display: flex; flex-direction: column; justify-content: center; }
 @media (max-width: 767px) { [style*="--hm:"]:not(#_) { min-height: var(--hm) !important; } }
+
+/* === Cabecera como en la web original === */
+:root { --color-cabecera: #F0E8D1; --alto-logo: 55px; }
+.cabecera .ancho { min-height: 85px; }
+.menu > ul > li > a { font-size: 14px; }
+@media (max-width: 900px) { :root { --alto-logo: 49px; } .cabecera .ancho { min-height: 75px; } }
