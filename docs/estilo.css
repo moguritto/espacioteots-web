@@ -240,3 +240,6 @@ h1.como-h4 { font-size: 1.1rem; }
 .cabecera .ancho { min-height: 85px; }
 .menu > ul > li > a { font-size: 14px; }
 @media (max-width: 900px) { :root { --alto-logo: 49px; } .cabecera .ancho { min-height: 75px; } }
+/* === Botones añadidos === */
+.ver-perfil { background: #F5F5F5 !important; color: #A29171 !important; font-family: "Poppins", sans-serif; font-size: 15px; font-weight: 600; border: 1px solid #F1F1F1; border-radius: 6px; padding: 10px 45px 11px; display: inline-block; text-decoration: none; margin-top: 8px; }
+.ver-perfil:hover { background: #EDE6D6 !important; }
