@@ -655,6 +655,19 @@ class Limpiador:
                     fig.append(fc)
                 car.append(fig)
             nodos = [car] if car.contents else []
+        elif tipo in ("html", "shortcode") and not cuerpo.find("iframe") and \
+                len(set(re.findall(r"youtube\.com/watch\?v=([\w-]{11})", str(cuerpo)))) >= 2:
+            # lista de vídeos de YouTube hecha con HTML propio: se muestran los vídeos incrustados
+            ids = list(dict.fromkeys(re.findall(r"youtube\.com/watch\?v=([\w-]{11})", str(cuerpo))))[:6]
+            rej = self.nuevo("div", class_="rejilla videos")
+            for i in ids:
+                rej.append(self.iframe(f"https://www.youtube-nocookie.com/embed/{i}"))
+            nodos = [rej]
+        elif tipo in ("html", "shortcode") and (cuerpo.find("script") or cuerpo.select("[class*=feed], [class*=yottie], [class*=sbi], [class*=instagram], [id*=feed]")):
+            # incrustaciones con JavaScript (feeds de YouTube/Instagram...): solo se conservan los iframes de vídeo
+            nodos = [self.iframe(f.get("src") or f.get("data-src")) for f in cuerpo.find_all("iframe")]
+            if not any(nodos):
+                self.avisos.append(f"widget '{tipo}' con JavaScript descartado")
         elif tipo in ("divider",):
             nodos = [self.nuevo("hr")]
         elif tipo in ("spacer", "nav-menu", "search-form"):
@@ -679,7 +692,7 @@ class Limpiador:
                 for n in self.limpiar(c):
                     det.append(n)
                 nodos.append(det)
-        elif tipo in ("image-carousel", "image-gallery", "gallery", "media-carousel"):
+        elif tipo in ("image-carousel", "image-gallery", "gallery", "media-carousel", "nested-carousel", "wpr-image-carousel"):
             g = self.nuevo("div", class_="galeria")
             vistos = set()
             for img in cuerpo.find_all("img"):

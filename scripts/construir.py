@@ -131,6 +131,8 @@ def main():
         html = plantilla.render(cfg=c, R=MARCA, pie=pies.get(pie_id or cfg.get("pie_principal", ""), pie), ruta=ruta, titulo=titulo, descripcion=descripcion,
                                 contenido=contenido, tipo=tipo, base_js=base_js,
                                 es_portada=(ruta == ""))
+        for vieja, nueva in cfg.get("sustituir_fuentes", {}).items():
+            html = html.replace(vieja, nueva)
         return reescribir(html, ruta, enlazar) + "\n"
 
     for ruta, meta in indice.items():
@@ -145,8 +147,8 @@ def main():
     # 404: GitHub Pages la sirve en cualquier ruta, así que fija la base con un pequeño script
     texto404 = cfg.get("texto_404", '<section class="bloque"><div class="ancho"><h1>Página no encontrada</h1>'
                                    '<p>La página que buscas no existe o ha cambiado de sitio.</p>'
-                                   '<p class="botones"><a class="boton" href="@RAIZ@/">Ir al inicio</a></p></div></section>')
-    (DOCS / "404.html").write_text(pagina("", "Página no encontrada", "", formatear(texto404), base_js=True)
+                                   '<p class="botones"><a class="boton" href="@RAIZ@/./">Ir al inicio</a></p></div></section>')
+    (DOCS / "404.html").write_text(pagina("", cfg.get("titulo_404", "Página no encontrada"), "", formatear(texto404), base_js=True)
                                    , encoding="utf-8")
 
     # páginas de redirección para direcciones antiguas

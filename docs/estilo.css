@@ -155,6 +155,7 @@ td, th { border: 1px solid #ddd; padding: .4em .6em; text-align: left; }
 
 .menu .redes a { font-size: 0; padding: 0; }
 .pie .col { flex-basis: 0; }
+@media (max-width: 767px) { .pie .col { flex-basis: 100%; } }
 .pie .imagen img { max-width: 240px; }
 
 .centrado { display: flex; flex-direction: column; justify-content: center; }
