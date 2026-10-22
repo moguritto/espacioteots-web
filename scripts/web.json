@@ -1,0 +1,46 @@
+{
+ "nombre": "Espacio TEOTS",
+ "dominio": "espacioteots.org",
+ "repo": "espacioteots-web",
+ "idioma": "es",
+ "fuentes": "https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,700;1,300&family=Poppins:wght@300;500;700&family=El+Messiri:wght@500&display=swap",
+ "favicon": "img/favicon.png",
+ "logo": "img/logo-therapy-marron.webp",
+ "contacto": {
+  "whatsapp": "+34644632663",
+  "texto": "Escríbenos directamente:"
+ },
+ "menu": [
+  {
+   "texto": "Servicios",
+   "url": "https://espacioteots.org/terapias/#servicios"
+  },
+  {
+   "texto": "Profesionales",
+   "url": "https://espacioteots.org/terapias/#profesionales"
+  },
+  {
+   "texto": "Actividades",
+   "url": "https://espacioteots.org/terapias/#actividades"
+  },
+  {
+   "texto": "Contacto",
+   "url": "https://espacioteots.org/terapias/#contacto"
+  }
+ ],
+ "logo2": "img/muralla-264-r7fjby3qofts0fshawziskknhsalkrdhykljiyqbu0.webp",
+ "redes": [
+  {
+   "texto": "WhatsApp",
+   "url": "https://wa.me/34644632663"
+  },
+  {
+   "texto": "Instagram",
+   "url": "https://www.instagram.com/espacioteots/"
+  },
+  {
+   "texto": "Facebook",
+   "url": "https://www.facebook.com/espacioteots"
+  }
+ ]
+}
