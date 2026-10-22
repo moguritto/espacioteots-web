@@ -202,7 +202,7 @@ def css_de_pagina(soup, base_url):
 
 PROPIEDADES = ("background-color", "background-image", "color", "text-align", "font-family", "font-size",
                "font-weight", "font-style", "text-transform", "letter-spacing", "line-height",
-               "min-height", "--min-height")
+               "min-height", "--min-height", "width", "max-width")
 
 
 def estilo_de(reglas, el_id, interior=""):
@@ -418,7 +418,8 @@ class Limpiador:
                 tag = "p"
             t = self.nuevo(tag)
             self.limpiar_hijos(tit, t)
-            st = {**{k: v for k, v in estilo.items() if k in ("text-align", "color")}, **estilo_t}
+            st = {**{k: v for k, v in estilo.items() if k in ("text-align", "color")},
+                  **{k: v for k, v in estilo_t.items() if k not in ("width", "max-width")}}
             self.aplicar_estilo(t, {k: v for k, v in st.items() if "min-height" not in k})
             nodos = [t]
         elif tipo == "text-editor":
@@ -435,6 +436,10 @@ class Limpiador:
             img = cuerpo.find("img")
             if img:
                 t = self.imagen(img)
+                ei = estilo_de(self.reglas, w.get("data-id"), " img")
+                ei = {k: v for k, v in ei.items() if k in ("width", "max-width") and "%" in v or k == "max-width"}
+                if t is not None and ei:
+                    self.aplicar_estilo(t, ei)
                 a = img.find_parent("a")
                 if t is not None and a and a.get("href") and not a["href"].startswith("#"):
                     enl = self.nuevo("a", href=urljoin(self.base, a["href"]))
@@ -631,6 +636,24 @@ class Limpiador:
                     fig.append(cap)
                 if fig.contents:
                     car.append(fig)
+            nodos = [car] if car.contents else []
+        elif tipo in ("testimonial-carousel", "reviews"):
+            car = self.nuevo("div", class_="carrusel opiniones")
+            for sl in cuerpo.select(".swiper-slide:not(.swiper-slide-duplicate)"):
+                txt = sl.select_one(".elementor-testimonial__text, .elementor-testimonial__content")
+                if not txt or not txt.get_text(strip=True):
+                    continue
+                fig = self.nuevo("figure")
+                bq = self.nuevo("blockquote")
+                for n in self.limpiar(txt):
+                    bq.append(n)
+                fig.append(bq)
+                nom = sl.select_one(".elementor-testimonial__name, cite")
+                if nom and nom.get_text(strip=True):
+                    fc = self.nuevo("figcaption")
+                    fc.string = nom.get_text(" ", strip=True)
+                    fig.append(fc)
+                car.append(fig)
             nodos = [car] if car.contents else []
         elif tipo in ("divider",):
             nodos = [self.nuevo("hr")]

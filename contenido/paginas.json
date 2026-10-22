@@ -97,9 +97,7 @@
   "cabecera": "22321",
   "pie": "22365",
   "plantilla": "normal",
-  "avisos": [
-   "widget 'testimonial-carousel' limpiado de forma genérica"
-  ]
+  "avisos": []
  },
  "salas/": {
   "titulo": "Salas y consultorios en Lugo",
@@ -118,7 +116,6 @@
   "pie": "22324",
   "plantilla": "normal",
   "avisos": [
-   "widget 'testimonial-carousel' limpiado de forma genérica",
    "widget 'wpr-data-table' limpiado de forma genérica"
   ]
  },
@@ -131,7 +128,6 @@
   "plantilla": "normal",
   "avisos": [
    "widget 'icon' limpiado de forma genérica",
-   "widget 'testimonial-carousel' limpiado de forma genérica",
    "widget 'wp-widget-qligg_widget' limpiado de forma genérica",
    "widget 'wpr-data-table' limpiado de forma genérica"
   ]
