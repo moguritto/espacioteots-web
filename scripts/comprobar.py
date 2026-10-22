@@ -24,6 +24,8 @@ def main(externos=False):
             continue
         rel = f.relative_to(DOCS)
         html = f.read_text(encoding="utf-8")
+        if "data-redireccion" in html:
+            continue
         for attr, url in re.findall(r'(href|src)="([^"]*)"', html):
             if url.startswith(("mailto:", "tel:", "data:")):
                 continue

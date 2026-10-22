@@ -36,6 +36,22 @@ class Enlazador:
             if "#" in k:
                 clave += "#" + k.split("#", 1)[1]
             self.cambios[clave] = v
+        # "redirecciones" en web.json: dirección antigua -> página migrada (se crean páginas que redirigen)
+        self.alias_fijos = {ruta_de_url(k): ruta_de_url(v) for k, v in cfg.get("redirecciones", {}).items()}
+        self.alias_usados = dict(self.alias_fijos)
+
+    def buscar_alias(self, destino):
+        """Dirección antigua -> página migrada con el mismo final (p. ej. es/soul/ -> recursos/peliculas/soul/)."""
+        if destino in self.alias_fijos:
+            return self.alias_fijos[destino]
+        ultimo = destino.strip("/").split("/")[-1].lower()
+        if not ultimo or ultimo in ("es", "en", "gl"):
+            return None
+        exactos = [r for r in self.rutas if r.strip("/").split("/")[-1].lower() == ultimo]
+        if len(exactos) == 1:
+            return exactos[0]
+        prefijos = [r for r in self.rutas if r.strip("/").split("/")[-1].lower().startswith(ultimo + "-")]
+        return prefijos[0] if len(prefijos) == 1 else None
 
     def archivo(self, url):
         """PDF u otro documento subido a WordPress: se copia a docs/archivos/."""
@@ -80,6 +96,10 @@ class Enlazador:
             if destino == ruta_actual and frag:
                 return frag
             return (prefijo(ruta_actual) + destino or "./") + frag
+        alias = self.buscar_alias(destino)
+        if alias:
+            self.alias_usados[destino] = alias
+            return prefijo(ruta_actual) + alias or "./"
         return href  # página no migrada: se queda apuntando a la web antigua (lo avisa comprobar.py)
 
 
@@ -127,7 +147,21 @@ def main():
                                    '<p>La página que buscas no existe o ha cambiado de sitio.</p>'
                                    '<p class="botones"><a class="boton" href="@RAIZ@/">Ir al inicio</a></p></div></section>')
     (DOCS / "404.html").write_text(pagina("", "Página no encontrada", "", formatear(texto404), base_js=True)
-                                   .replace('href="./"', 'href=""'), encoding="utf-8")
+                                   , encoding="utf-8")
+
+    # páginas de redirección para direcciones antiguas
+    for viejo, nuevo in sorted(enlazar.alias_usados.items()):
+        f = fichero_de_ruta(viejo)
+        if viejo in indice or (f.exists() and "data-redireccion" not in f.read_text(encoding="utf-8")):
+            continue
+        destino = prefijo(viejo) + nuevo
+        f.parent.mkdir(parents=True, exist_ok=True)
+        f.write_text(f'<!DOCTYPE html>\n<html lang="{cfg["idioma"]}" data-redireccion>\n<head>\n<meta charset="utf-8">\n'
+                     f'<title>Redirigiendo…</title>\n<link rel="canonical" href="https://{cfg["dominio"]}/{nuevo}">\n'
+                     f'<meta http-equiv="refresh" content="0; url={destino}">\n<meta name="robots" content="noindex">\n</head>\n'
+                     f'<body><p><a href="{destino}">{cfg["dominio"]}/{nuevo}</a></p></body>\n</html>\n', encoding="utf-8")
+    if enlazar.alias_usados:
+        print(f"{len(enlazar.alias_usados)} páginas de redirección")
 
     hoy = date.today().isoformat()
     urls = "\n".join(f"  <url><loc>https://{cfg['dominio']}/{r}</loc><lastmod>{hoy}</lastmod></url>" for r in indice)
