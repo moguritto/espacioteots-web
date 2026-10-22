@@ -29,6 +29,13 @@ class Enlazador:
     def __init__(self, cfg, rutas):
         self.dominios = {cfg["dominio"], "www." + cfg["dominio"]}
         self.rutas = set(rutas)
+        # "enlaces" en web.json: dirección antigua -> nueva dirección, o null para quitar el enlace
+        self.cambios = {}
+        for k, v in cfg.get("enlaces", {}).items():
+            clave = ruta_de_url(k) if k.startswith(("http", "/")) else k
+            if "#" in k:
+                clave += "#" + k.split("#", 1)[1]
+            self.cambios[clave] = v
 
     def archivo(self, url):
         """PDF u otro documento subido a WordPress: se copia a docs/archivos/."""
@@ -50,9 +57,23 @@ class Enlazador:
             return href
         destino = ruta_de_url(href)
         frag = ("#" + u.fragment) if u.fragment else ""
+        clave = destino + frag if destino + frag in self.cambios else destino
+        if clave in self.cambios:
+            nuevo = self.cambios[clave]
+            if nuevo is None:
+                return None
+            if nuevo != href:
+                if frag and "#" not in nuevo and clave == destino:
+                    nuevo += frag
+                return self(nuevo, ruta_actual)
         if "/wp-content/uploads/" in u.path and not re.search(r"\.(jpe?g|png|webp|gif)$", u.path, re.I):
             rel = self.archivo(href if u.netloc else "https://" + next(iter(self.dominios)) + href)
             return prefijo(ruta_actual) + rel if rel else href
+        if "/wp-content/uploads/" in u.path:
+            from comun import guardar_imagen
+            rel = guardar_imagen(href if u.netloc else "https://" + next(iter(self.dominios)) + href, href)
+            if rel:
+                return prefijo(ruta_actual) + rel
         if destino in self.rutas:
             if destino == ruta_actual and frag:
                 return frag
@@ -61,7 +82,12 @@ class Enlazador:
 
 
 def reescribir(html, ruta, enlazar):
-    html = re.sub(r'href="([^"]*)"', lambda m: f'href="{enlazar(m.group(1), ruta)}"', html)
+    def cambiar(m):
+        nuevo = enlazar(m.group(2), ruta)
+        return m.group(1) + (f' href="{nuevo}"' if nuevo is not None else ' data-sin-enlace=""')
+    html = re.sub(r'(<a\b[^>]*?)\s+href="([^"]*)"', cambiar, html)
+    # enlaces quitados: <a data-sin-enlace>texto</a> -> texto
+    html = re.sub(r'<a\b[^>]*data-sin-enlace=""[^>]*>(.*?)</a>', r"\1", html, flags=re.S)
     return html.replace(MARCA, prefijo(ruta))
 
 
@@ -75,9 +101,13 @@ def main():
     pie_f = CONTENIDO / "_pie.html"
     pie = formatear(pie_f.read_text(encoding="utf-8")) if pie_f.exists() else ""
 
-    def pagina(ruta, titulo, descripcion, contenido, tipo="normal", base_js=False):
-        html = plantilla.render(cfg=cfg, R=MARCA, ruta=ruta, titulo=titulo, descripcion=descripcion,
-                                contenido=contenido, pie=pie, tipo=tipo, base_js=base_js,
+    pies = {f.stem[5:]: formatear(f.read_text(encoding="utf-8")) for f in CONTENIDO.glob("_pie-*.html")}
+
+    def pagina(ruta, titulo, descripcion, contenido, tipo="normal", base_js=False, cab=None, pie_id=None):
+        c = dict(cfg)
+        c.update({k: v for k, v in cfg.get("cabeceras", {}).get(cab or cfg.get("cabecera_principal", ""), {}).items() if v})
+        html = plantilla.render(cfg=c, R=MARCA, pie=pies.get(pie_id or cfg.get("pie_principal", ""), pie), ruta=ruta, titulo=titulo, descripcion=descripcion,
+                                contenido=contenido, tipo=tipo, base_js=base_js,
                                 es_portada=(ruta == ""))
         return reescribir(html, ruta, enlazar) + "\n"
 
@@ -85,7 +115,8 @@ def main():
         frag = (CONTENIDO / "paginas" / f"{slug_de_ruta(ruta)}.html").read_text(encoding="utf-8")
         f = fichero_de_ruta(ruta)
         f.parent.mkdir(parents=True, exist_ok=True)
-        f.write_text(pagina(ruta, meta["titulo"], meta["descripcion"], formatear(frag), meta.get("plantilla", "normal")),
+        f.write_text(pagina(ruta, meta["titulo"], meta["descripcion"], formatear(frag), meta.get("plantilla", "normal"),
+                            cab=meta.get("cabecera"), pie_id=meta.get("pie")),
                      encoding="utf-8")
         print("ok  /" + ruta)
 

@@ -3,44 +3,149 @@
  "dominio": "espacioteots.org",
  "repo": "espacioteots-web",
  "idioma": "es",
- "fuentes": "https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,700;1,300&family=Poppins:wght@300;500;700&family=El+Messiri:wght@500&display=swap",
+ "fuentes": "https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,700;1,300&family=Poppins:wght@300;500;700&family=El+Messiri:wght@400;500;600&family=Kanit:wght@300;400;500;600&family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Bakbak+One&family=Oswald:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap",
  "favicon": "img/favicon.png",
  "logo": "img/logo-therapy-marron.webp",
  "contacto": {
   "whatsapp": "+34644632663",
   "texto": "Escríbenos directamente:"
  },
- "menu": [
-  {
-   "texto": "Servicios",
-   "url": "https://espacioteots.org/terapias/#servicios"
+ "enlaces": {
+  "https://espacioteots.org/alquiler/": "https://espacioteots.org/coworking/",
+  "https://espacioteots.org/contacto/": "https://espacioteots.org/terapias/#contacto",
+  "https://espacioteots.org/sobre-mi/": "https://espacioteots.org/manuel-lameiro/",
+  "https://espacioteots.org/recursos/": "https://teots.org/recursos/",
+  "https://espacioteots.org/patricia-albarran/": null,
+  "https://espacioteots.org/events/relaciones-de-pareja-taller-grupal/": null,
+  "https://espacioteots.org/tarifas/": "https://espacioteots.org/coworking/tarifas/",
+  "https://espacioteots.org/coworking/tarifas-2/": "https://espacioteots.org/coworking/tarifas/",
+  "https://espacioteots.org/#contacto": "https://espacioteots.org/terapias/#contacto",
+  "https://espacioteots.org/alquiler/#espacio": "https://espacioteots.org/coworking/",
+  "https://espacioteots.org/coworking/#espacio": "https://espacioteots.org/coworking/",
+  "https://espacioteots.org/terapias/#eventos": "https://espacioteots.org/terapias/#actividades"
+ },
+ "cabeceras": {
+  "22321": {
+   "logo": "img/logo-therapy-marron.webp",
+   "logo2": "img/muralla-264-r7fjby3qofts0fshawziskknhsalkrdhykljiyqbu0.webp",
+   "menu": [
+    {
+     "texto": "Servicios",
+     "url": "https://espacioteots.org/terapias/#servicios"
+    },
+    {
+     "texto": "Profesionales",
+     "url": "https://espacioteots.org/terapias/#profesionales"
+    },
+    {
+     "texto": "Actividades",
+     "url": "https://espacioteots.org/terapias/#actividades"
+    },
+    {
+     "texto": "Contacto",
+     "url": "https://espacioteots.org/terapias/#contacto"
+    }
+   ],
+   "redes": [
+    {
+     "texto": "WhatsApp",
+     "url": "https://wa.me/34644632663"
+    },
+    {
+     "texto": "Instagram",
+     "url": "https://www.instagram.com/espacioteots/"
+    },
+    {
+     "texto": "Facebook",
+     "url": "https://www.facebook.com/espacioteots"
+    }
+   ]
   },
-  {
-   "texto": "Profesionales",
-   "url": "https://espacioteots.org/terapias/#profesionales"
+  "22374": {
+   "logo": "img/logo-rent-marron.webp",
+   "logo2": "img/muralla-264-r7fjby3qofts0fshawziskknhsalkrdhykljiyqbu0.webp",
+   "menu": [
+    {
+     "texto": "Espacio",
+     "url": "https://espacioteots.org/coworking/"
+    },
+    {
+     "texto": "Tarifas",
+     "url": "https://espacioteots.org/coworking/tarifas-2/"
+    },
+    {
+     "texto": "Salas",
+     "url": "https://espacioteots.org/coworking/#salas"
+    },
+    {
+     "texto": "Beneficios",
+     "url": "https://espacioteots.org/coworking/#beneficios"
+    },
+    {
+     "texto": "Referencias",
+     "url": "https://espacioteots.org/coworking/#referencias"
+    },
+    {
+     "texto": "Contacto",
+     "url": "https://espacioteots.org/coworking/#contacto"
+    }
+   ],
+   "redes": [
+    {
+     "texto": "Whatsapp",
+     "url": "https://wa.me/+34644632663"
+    },
+    {
+     "texto": "Instagram",
+     "url": "https://www.instagram.com/espacioteots/"
+    },
+    {
+     "texto": "Facebook",
+     "url": "https://www.facebook.com/espacioteots"
+    }
+   ]
   },
-  {
-   "texto": "Actividades",
-   "url": "https://espacioteots.org/terapias/#actividades"
-  },
-  {
-   "texto": "Contacto",
-   "url": "https://espacioteots.org/terapias/#contacto"
+  "23393": {
+   "logo": "img/logo-rent-marron-1.webp",
+   "logo2": "img/output-onlinepngtools-r7qcwk7ro8gswq98emsb10blagr7ur4d5yu24i.webp",
+   "menu": [
+    {
+     "texto": "Espacio",
+     "url": "https://espacioteots.org/alquiler/coruna/"
+    },
+    {
+     "texto": "Tarifas",
+     "url": "https://espacioteots.org/coworking/tarifas-2/"
+    },
+    {
+     "texto": "Salas",
+     "url": "https://espacioteots.org/alquiler/coruna/#salas"
+    },
+    {
+     "texto": "Beneficios",
+     "url": "https://espacioteots.org/alquiler/coruna/#beneficios"
+    },
+    {
+     "texto": "Referencias",
+     "url": "https://espacioteots.org/alquiler/coruna/#referencias"
+    }
+   ],
+   "redes": [
+    {
+     "texto": "Whatsapp",
+     "url": "https://wa.me/+34644632663"
+    },
+    {
+     "texto": "Instagram",
+     "url": "https://www.instagram.com/espacioteots/"
+    },
+    {
+     "texto": "Facebook",
+     "url": "https://www.facebook.com/espacioteots"
+    }
+   ]
   }
- ],
- "logo2": "img/muralla-264-r7fjby3qofts0fshawziskknhsalkrdhykljiyqbu0.webp",
- "redes": [
-  {
-   "texto": "WhatsApp",
-   "url": "https://wa.me/34644632663"
-  },
-  {
-   "texto": "Instagram",
-   "url": "https://www.instagram.com/espacioteots/"
-  },
-  {
-   "texto": "Facebook",
-   "url": "https://www.facebook.com/espacioteots"
-  }
- ]
+ },
+ "cabecera_principal": "22321",
+ "pie_principal": "22365"
 }
