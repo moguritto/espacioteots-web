@@ -219,3 +219,8 @@ body.sola .redes a:hover { color: #212121; opacity: 1; }
   body.sola .con-video .grupo { grid-template-columns: 1fr; gap: 40px; }
   body.sola .con-video h2 { text-align: center !important; padding: 0 20px; }
 }
+h1.como-h2 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); }
+h2.como-h1 { font-size: clamp(2rem, 5vw, 3rem); }
+.oculto { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+h1.como-h3 { font-size: 1.35rem; }
+h1.como-h4 { font-size: 1.1rem; }
