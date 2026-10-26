@@ -60,6 +60,25 @@ def rel_prefix(dest):
     d = dest.count("/")
     return "../" * d if d else "./"
 
+EVENTON_STATIC = """<div class="elementor-widget-container"><div class="evo-estatico" style="max-width:800px;margin:0 auto;font-family:Poppins,sans-serif">
+<p style="font-family:Poppins,sans-serif;font-weight:800;font-size:30px;color:#202124;margin:0 0 12px">CADA JUEVES</p>
+<div style="background:#ECECEC;border-radius:10px;padding:16px 20px;color:#fff">
+<div style="display:flex;gap:16px;align-items:baseline;flex-wrap:wrap"><span style="font-weight:800;font-size:22px">19:00 – 20:00</span><span style="font-weight:800;font-size:20px;text-transform:uppercase">Meditación</span></div>
+<p style="color:#6b6b6b;margin:10px 0 0;font-size:14px;line-height:1.6">Un espacio de pausa, conexión y escucha interior. A través de la respiración consciente y el silencio compartido, abrimos la puerta a un estado de presencia profunda. No se requiere experiencia previa. Solo traer ropa cómoda y disposición a estar.<br><strong>Espacio Teots</strong> · Rúa Anduriñas, 17, entresuelo. 27004 Lugo</p>
+</div></div></div>"""
+
+def replace_eventon(html):
+    m = re.search(r'<div class="elementor-element[^"]*elementor-widget-EventON"[^>]*>', html)
+    if not m:
+        return html
+    i, depth = m.end(), 1
+    for t in re.finditer(r"<(/?)div\b[^>]*>", html[i:]):
+        depth += -1 if t.group(1) else 1
+        if depth == 0:
+            end = i + t.start()
+            return html[:m.end()] + EVENTON_STATIC + html[end:]
+    return html
+
 def clean_html(html):
     # quitar scripts de seguimiento (PixelYourSite, Google)
     def drop_script(m):
@@ -76,6 +95,7 @@ def clean_html(html):
                   'style="display:inline-block;padding:12px 26px;border-radius:6px;background:#F5F5F5;color:#A29171;'
                   'font-family:Poppins,sans-serif;font-weight:600;font-size:15px;text-decoration:none">'
                   'Ver Espacio Teots en Instagram</a>', html)
+    html = replace_eventon(html)
     html = re.sub(r"<script\b[^>]*insta-gallery[^>]*></script>", "", html, flags=re.I)
     html = re.sub(r"<link\b[^>]*(?:insta-gallery|youtube-feed-pro/css/https)[^>]*>", "", html, flags=re.I)
     return html
