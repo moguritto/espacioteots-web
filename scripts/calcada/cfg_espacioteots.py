@@ -6,3 +6,6 @@ SUBS = [
     (r'<script\b[^>]*src="[^"]*(?:/eventON/|meet\.jit\.si)[^"]*"[^>]*></script>', ''),
     (r'<script\b[^>]*id="(?:evo-inlinescripts[^"]*|evcal_ajax_handle-js-extra|evcal_functions-js-extra)"[^>]*>.*?</script>', ''),
 ]
+LIVE_JSON = "/mnt/user-data/uploads/Downloads/espacioteots_html_vivo.json"
+# teléfonos mal enlazados en la original (href="+34..." o "622..."): mismo aspecto, enlace que funciona
+SUBS += [(r'href="\+?(?:34)?(\d{9})"', r'href="tel:+34\1"')]
