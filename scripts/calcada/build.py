@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Copia calcada de espacioteots.org a partir del ZIP de Simply Static.
-Uso: python3 build.py ZIPDIR OUTDIR [extra_files.txt]
+Uso: python3 build.py ZIPDIR OUTDIR [extra_files.txt] [config.py]
+config.py (opcional) redefine DOMAIN, PAGES, REDIRECTS, EXTERNAL, INSTAGRAM, INSTAGRAM_TXT,
+EVENTON_STATIC, SUBS (lista de (regex, sustitución)) y OLD_REDIRECTS_DIR.
 """
 import os, re, sys, shutil, json
 from urllib.parse import unquote
@@ -38,6 +40,12 @@ REDIRECTS = {
     "events/relaciones-de-pareja-taller-grupal/": "ana-andrade/",
 }
 EXTERNAL = {"recursos/": "https://teots.org/recursos/"}
+DOMAIN = "espacioteots.org"
+INSTAGRAM = "https://www.instagram.com/espacioteots/"
+INSTAGRAM_TXT = "Ver Espacio Teots en Instagram"
+SUBS = []
+OLD_REDIRECTS_DIR = None
+EXTRA_PAGES = []  # páginas que se añaden aparte (p. ej. textos legales de la copia anterior)
 PHONE = re.compile(r"^/[\w-]+/(?:34)?(\d{9})/?$")
 UNWANTED_SCRIPT = re.compile(r"pixelyoursite|pys[-_]|fbq\(|googletagmanager|gtag\(|google-analytics|xmlrpc", re.I)
 
@@ -49,7 +57,7 @@ def norm_page(p):
 
 def page_target(p):
     p = norm_page(p)
-    if p in PAGES: return p
+    if p in PAGES or p in EXTRA_PAGES: return p
     if p in REDIRECTS: return REDIRECTS[p]
     return None
 
@@ -67,16 +75,48 @@ EVENTON_STATIC = """<div class="elementor-widget-container"><div class="evo-esta
 <p style="color:#6b6b6b;margin:10px 0 0;font-size:14px;line-height:1.6">Un espacio de pausa, conexión y escucha interior. A través de la respiración consciente y el silencio compartido, abrimos la puerta a un estado de presencia profunda. No se requiere experiencia previa. Solo traer ropa cómoda y disposición a estar.<br><strong>Espacio Teots</strong> · Rúa Anduriñas, 17, entresuelo. 27004 Lugo</p>
 </div></div></div>"""
 
-def replace_eventon(html):
-    m = re.search(r'<div class="elementor-element[^"]*elementor-widget-EventON"[^>]*>', html)
-    if not m:
+WIDGETS = {}  # clase del widget de Elementor -> HTML fijo que sustituye su contenido
+
+def replace_widget(html, cls, new):
+    out, pos = [], 0
+    for m in re.finditer(r'<div class="elementor-element[^"]*\b' + re.escape(cls) + r'\b[^"]*"[^>]*>', html):
+        if m.start() < pos: continue
+        i, depth = m.end(), 1
+        for t in re.finditer(r"<(/?)div\b[^>]*>", html[i:]):
+            depth += -1 if t.group(1) else 1
+            if depth == 0:
+                end = i + t.start()
+                out.append(html[pos:m.end()]); out.append(new); pos = end
+                break
+    out.append(html[pos:])
+    return "".join(out)
+
+REMOVE_IF_CONTAINS = []  # quita el widget entero si contiene alguno de estos textos
+
+def remove_widgets(html):
+    if not REMOVE_IF_CONTAINS:
         return html
-    i, depth = m.end(), 1
-    for t in re.finditer(r"<(/?)div\b[^>]*>", html[i:]):
-        depth += -1 if t.group(1) else 1
-        if depth == 0:
-            end = i + t.start()
-            return html[:m.end()] + EVENTON_STATIC + html[end:]
+    out, pos = [], 0
+    for m in re.finditer(r'<div class="elementor-element[^"]*\belementor-widget\b[^"]*"[^>]*>', html):
+        if m.start() < pos: continue
+        i, depth = m.end(), 1
+        for t in re.finditer(r"<(/?)div\b[^>]*>", html[i:]):
+            depth += -1 if t.group(1) else 1
+            if depth == 0:
+                end = i + t.end()
+                block = html[m.start():end]
+                if any(k in block for k in REMOVE_IF_CONTAINS):
+                    out.append(html[pos:m.start()]); pos = end
+                break
+    out.append(html[pos:])
+    return "".join(out)
+
+def replace_eventon(html):
+    w = dict(WIDGETS)
+    if EVENTON_STATIC:
+        w.setdefault("elementor-widget-EventON", EVENTON_STATIC)
+    for cls, new in w.items():
+        html = replace_widget(html, cls, new)
     return html
 
 def clean_html(html):
@@ -90,14 +130,17 @@ def clean_html(html):
     html = re.sub(r'<a\b[^>]*href="https?://royal-elementor-addons\.com[^"]*"[^>]*>(.*?)</a>', r"\1", html, flags=re.S | re.I)
     # feed de Instagram (necesita servidor) -> enlace al perfil
     html = re.sub(r'<div id="instagram-gallery-feed-\d+" class="instagram-gallery-feed"[^>]*>\s*<!-- <FeedContainer/> -->',
-                  '<div class="instagram-gallery-feed" style="text-align:center;padding:24px 0">'
-                  '<a href="https://www.instagram.com/espacioteots/" target="_blank" rel="noopener" '
+                  lambda m: '<div class="instagram-gallery-feed" style="text-align:center;padding:24px 0">'
+                  '<a href="' + INSTAGRAM + '" target="_blank" rel="noopener" '
                   'style="display:inline-block;padding:12px 26px;border-radius:6px;background:#F5F5F5;color:#A29171;'
                   'font-family:Poppins,sans-serif;font-weight:600;font-size:15px;text-decoration:none">'
-                  'Ver Espacio Teots en Instagram</a>', html)
+                  + INSTAGRAM_TXT + '</a>', html)
     html = replace_eventon(html)
+    html = remove_widgets(html)
     html = re.sub(r"<script\b[^>]*insta-gallery[^>]*></script>", "", html, flags=re.I)
     html = re.sub(r"<link\b[^>]*(?:insta-gallery|youtube-feed-pro/css/https)[^>]*>", "", html, flags=re.I)
+    for a, b in SUBS:
+        html = re.sub(a, b, html, flags=re.S)
     return html
 
 def rewrite_html(html, dest, src_page):
@@ -133,8 +176,8 @@ def rewrite_html(html, dest, src_page):
         return f'{attr}={q}{rp}{t}{frag}{q}'
     html = re.sub(r'(href|action)=(["\'])(/(?!/)[^"\']*)\2', fix_link, html)
     # canonical/og a dominio final
-    html = re.sub(r'(<link rel="canonical" href=")([^"]*)(")', lambda m: m.group(1) + "https://espacioteots.org/" + dest + m.group(3), html)
-    html = re.sub(r'(<meta property="og:url" content=")([^"]*)(")', lambda m: m.group(1) + "https://espacioteots.org/" + dest + m.group(3), html)
+    html = re.sub(r'(<link rel="canonical" href=")([^"]*)(")', lambda m: m.group(1) + f"https://{DOMAIN}/" + dest + m.group(3), html)
+    html = re.sub(r'(<meta property="og:url" content=")([^"]*)(")', lambda m: m.group(1) + f"https://{DOMAIN}/" + dest + m.group(3), html)
     return html
 
 def css_deps_and_rewrite(path_rel):
@@ -169,9 +212,12 @@ def redirect_page(target, dest):
     rp = rel_prefix(dest)
     url = rp + target
     return f"""<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Redirigiendo…</title>
-<meta name="robots" content="noindex"><link rel="canonical" href="https://espacioteots.org/{target}">
+<meta name="robots" content="noindex"><link rel="canonical" href="https://{DOMAIN}/{target}">
 <meta http-equiv="refresh" content="0; url={url}"><script>location.replace({json.dumps(url)}+location.hash)</script></head>
 <body><a href="{url}">Continuar</a></body></html>"""
+
+if len(sys.argv) > 4:
+    exec(open(sys.argv[4], encoding="utf-8").read(), globals())
 
 if os.path.exists(OUT):
     shutil.rmtree(OUT)
@@ -188,6 +234,18 @@ for dest, src in PAGES.items():
 for dest, target in REDIRECTS.items():
     os.makedirs(os.path.join(OUT, dest), exist_ok=True)
     open(os.path.join(OUT, dest, "index.html"), "w", encoding="utf-8").write(redirect_page(target, dest))
+
+# redirecciones de la copia anterior (direcciones antiguas)
+if OLD_REDIRECTS_DIR:
+    for dp, _, fs in os.walk(OLD_REDIRECTS_DIR):
+        for fn in fs:
+            if fn != "index.html": continue
+            src = os.path.join(dp, fn)
+            if "data-redireccion" not in open(src, encoding="utf-8").read(): continue
+            rel = os.path.relpath(src, OLD_REDIRECTS_DIR)
+            dst = os.path.join(OUT, rel)
+            if not os.path.exists(dst):
+                os.makedirs(os.path.dirname(dst), exist_ok=True); shutil.copy2(src, dst)
 
 # dependencias (con CSS recursivo)
 todo = list(deps | EXTRA)
@@ -210,9 +268,9 @@ while todo:
         shutil.copy2(sp, op)
 
 open(os.path.join(OUT, ".nojekyll"), "w").write("")
-open(os.path.join(OUT, "robots.txt"), "w").write("User-agent: *\nAllow: /\nSitemap: https://espacioteots.org/sitemap.xml\n")
+open(os.path.join(OUT, "robots.txt"), "w").write("User-agent: *\nAllow: /\nSitemap: https://{DOMAIN}/sitemap.xml\n".format(DOMAIN=DOMAIN))
 sm = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-sm += [f"  <url><loc>https://espacioteots.org/{p}</loc></url>" for p in PAGES]
+sm += [f"  <url><loc>https://{DOMAIN}/{p}</loc></url>" for p in PAGES]
 sm.append("</urlset>")
 open(os.path.join(OUT, "sitemap.xml"), "w").write("\n".join(sm) + "\n")
 
