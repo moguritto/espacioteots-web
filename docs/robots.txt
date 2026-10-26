@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
-
 Sitemap: https://espacioteots.org/sitemap.xml
