@@ -1,4 +1,72 @@
 <!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Página no encontrada | Espacio TEOTS</title><meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
 <script>var B=location.hostname.endsWith('github.io')?'/espacioteots-web/':'/';</script>
-<style>body{margin:0;font-family:Poppins,system-ui,sans-serif;background:#F0E8D1;color:#665E4C;display:grid;place-items:center;min-height:100vh;text-align:center;padding:16px}a{display:inline-block;margin-top:18px;padding:12px 26px;border-radius:6px;background:#fff;color:#A29171;font-weight:600;text-decoration:none}h1{font-weight:500;letter-spacing:.06em}</style></head>
-<body><main><h1>ESPACIO TEOTS</h1><p>Esta página no existe o ha cambiado de dirección.</p><a id="v" href="/">Ir a la portada</a></main><script>document.getElementById('v').href=B</script></body></html>
+<style>
+:root{--arena:#F0E8D1;--crema:#FBF8EF;--marron:#67604D;--oro:#A29171;--texto:#5d5645}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--arena);color:var(--texto);font-family:Poppins,system-ui,sans-serif;font-weight:300;text-align:center;padding:32px 16px}
+main{max-width:620px}
+svg{width:100%;max-width:420px;height:auto;display:block;margin:0 auto 6px}
+.n{font-family:Oswald,"Arial Narrow",sans-serif;font-weight:400;letter-spacing:.3em;color:var(--oro);font-size:14px}
+h1{font-family:Oswald,"Arial Narrow",sans-serif;font-weight:300;color:var(--marron);font-size:clamp(30px,6vw,44px);line-height:1.1;text-transform:uppercase;letter-spacing:.04em;margin:6px 0 14px}
+p{font-size:16px;line-height:1.7;margin:0 auto 10px;max-width:520px}
+.bs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+a{display:inline-block;padding:12px 24px;border-radius:40px;text-decoration:none;font-weight:500;font-size:15px;background:var(--marron);color:#fff}
+a.o{background:transparent;color:var(--marron);border:1.5px solid var(--marron)}
+.vapor path{animation:sube 3.2s ease-in-out infinite;opacity:.0}
+.vapor path:nth-child(2){animation-delay:1.1s}.vapor path:nth-child(3){animation-delay:2.1s}
+@keyframes sube{0%{opacity:0;transform:translateY(6px)}40%{opacity:.7}100%{opacity:0;transform:translateY(-14px)}}
+.libelula{animation:vuela 4s ease-in-out infinite}
+@keyframes vuela{0%,100%{transform:translate(0,0)}50%{transform:translate(6px,-8px)}}
+@media (prefers-reduced-motion:reduce){.vapor path,.libelula{animation:none;opacity:.6}}
+</style></head>
+<body><main>
+<svg viewBox="0 0 420 264" role="img" aria-label="Un cojín de meditación vacío, una taza de té humeante, un cartel de «En retiro» y una libélula que se aleja con su hatillo">
+  <!-- suelo -->
+  <ellipse cx="200" cy="232" rx="170" ry="10" fill="#e3d9bf"/>
+  <!-- cartel -->
+  <rect x="300" y="128" width="7" height="104" rx="2" fill="#8c7a58"/>
+  <g transform="rotate(-4 330 140)">
+    <rect x="262" y="104" width="112" height="56" rx="6" fill="#c9b48a" stroke="#8c7a58" stroke-width="3"/>
+    <text x="318" y="128" text-anchor="middle" font-family="Oswald, Arial Narrow, sans-serif" font-size="15" fill="#4f4838" letter-spacing="1.5">EN RETIRO</text>
+    <text x="318" y="148" text-anchor="middle" font-family="Poppins, sans-serif" font-size="9.5" fill="#4f4838">vuelvo en silencio</text>
+  </g>
+  <!-- cojín (zafu) -->
+  <ellipse cx="170" cy="214" rx="96" ry="20" fill="#5b5443"/>
+  <ellipse cx="170" cy="196" rx="84" ry="28" fill="#7a705a"/>
+  <ellipse cx="170" cy="186" rx="76" ry="20" fill="#8e8369"/>
+  <path d="M110 186 Q170 174 230 186" stroke="#6f6550" stroke-width="2" fill="none"/>
+  <path d="M150 182 Q170 188 190 182" stroke="#a69a7d" stroke-width="2" fill="none"/>
+  <text x="170" y="254" text-anchor="middle" font-family="Poppins, sans-serif" font-size="10" fill="#8c7a58">(aún templado)</text>
+  <!-- taza de té -->
+  <path d="M38 196 h42 v18 a16 14 0 0 1 -16 14 h-10 a16 14 0 0 1 -16 -14z" fill="#fbf8ef" stroke="#8c7a58" stroke-width="2.5"/>
+  <path d="M80 200 q12 0 10 10 q-2 8 -12 8" fill="none" stroke="#8c7a58" stroke-width="2.5"/>
+  <ellipse cx="59" cy="196" rx="21" ry="4" fill="#b98f55"/>
+  <g class="vapor" fill="none" stroke="#a29171" stroke-width="2" stroke-linecap="round">
+    <path d="M50 186 q-6 -8 0 -16 q6 -8 0 -16"/><path d="M60 184 q-6 -8 0 -16 q6 -8 0 -16"/><path d="M70 186 q-6 -8 0 -16 q6 -8 0 -16"/>
+  </g>
+  <!-- rastro de vuelo -->
+  <path d="M232 168 C 260 120, 220 80, 270 58 S 340 40, 352 34" fill="none" stroke="#a29171" stroke-width="2" stroke-dasharray="3 7" stroke-linecap="round"/>
+  <!-- libélula con hatillo -->
+  <g class="libelula">
+    <g transform="translate(368 34) rotate(-18) scale(1.5)">
+      <ellipse cx="-12" cy="-7" rx="15" ry="5" fill="#ffffff" opacity=".85" stroke="#67604D" stroke-width="1.2" transform="rotate(-22 -12 -7)"/>
+      <ellipse cx="12" cy="-7" rx="15" ry="5" fill="#ffffff" opacity=".85" stroke="#67604D" stroke-width="1.2" transform="rotate(22 12 -7)"/>
+      <ellipse cx="-11" cy="2" rx="12" ry="4" fill="#ffffff" opacity=".85" stroke="#67604D" stroke-width="1.2" transform="rotate(14 -11 2)"/>
+      <ellipse cx="11" cy="2" rx="12" ry="4" fill="#ffffff" opacity=".85" stroke="#67604D" stroke-width="1.2" transform="rotate(-14 11 2)"/>
+      <circle cx="0" cy="-12" r="3.6" fill="#67604D"/>
+      <rect x="-1.6" y="-9" width="3.2" height="30" rx="1.6" fill="#67604D"/>
+      <path d="M0 18 L-10 30" stroke="#67604D" stroke-width="1.5"/>
+      <circle cx="-12" cy="33" r="6" fill="#c98b6b"/><path d="M-15 28 l3 -3 l3 3" fill="#c98b6b"/>
+    </g>
+  </g>
+</svg>
+<div class="n">ERROR 404</div>
+<h1>Esta página se ha ido de retiro</h1>
+<p>La hemos buscado sala por sala, en Amanecer, Esencia, Nido, Umbral y Éter, y solo hemos encontrado su cojín, todavía templado, y un té a medio tomar.</p>
+<p>Puede que esté meditando, que haya cambiado de dirección o que ya no exista. Todo es impermanente.</p>
+<div class="bs"><a id="v" href="/">Volver al inicio</a><a id="p" class="o" href="/terapias/">Ver profesionales</a></div>
+</main>
+<script>document.getElementById('v').href=B;document.getElementById('p').href=B+'terapias/';</script>
+</body></html>
