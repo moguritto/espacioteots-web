@@ -252,6 +252,8 @@ var userSettings = {"url":"\/","uid":"0","time":"1793018276","secure":"1"};
 	<style id="perfiles-nuevos">.fila-perfiles-nuevos>.elementor-container{justify-content:center}</style>
 <script src="/perfiles/activos.js"></script>
 <script>document.addEventListener("DOMContentLoaded",function(){var P=window.PERFILES||{};document.querySelectorAll("[data-perfil]").forEach(function(e){if(P[e.getAttribute("data-perfil")]===false)e.style.display="none";});});</script>
+<style id="filtro-ciudad">.filtro-ciudad{width:100%;flex-basis:100%;display:flex;justify-content:center;gap:10px;margin:6px 0 22px}.filtro-ciudad button{font-family:Poppins,sans-serif;font-size:15px;font-weight:600;padding:8px 22px;border-radius:999px;border:1px solid #A29171;background:transparent;color:#A29171;cursor:pointer}.filtro-ciudad button[aria-pressed="true"]{background:#A29171;color:#fff}.filtro-ciudad button:focus-visible{outline:2px solid #665E4C;outline-offset:2px}.fuera-ciudad{display:none!important}.elementor-element-183416ac>.elementor-container,.elementor-element-edd4c39>.elementor-container{justify-content:center}</style>
+<script>document.addEventListener("DOMContentLoaded",function(){var g=document.querySelector(".filtro-ciudad");if(!g)return;function f(c){g.querySelectorAll("button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.c===c?"true":"false")});document.querySelectorAll("[data-ciudad]").forEach(function(e){e.classList.toggle("fuera-ciudad",(" "+e.getAttribute("data-ciudad")+" ").indexOf(" "+c+" ")<0)})}g.addEventListener("click",function(ev){var b=ev.target.closest("button");if(b)f(b.dataset.c)});f(location.hash==="#coruna"?"coruna":"lugo")});</script>
 </head>
 <body class="wp-singular page-template-default page page-id-22179 wp-embed-responsive wp-theme-hello-elementor theme-default elementor-default elementor-kit-3716 elementor-page elementor-page-22179">
 
@@ -837,9 +839,10 @@ PRÁCTICAS EN EL ESPACIO</h2>				</div>
 				<div class="elementor-widget-container">
 					<h2 class="elementor-heading-title elementor-size-default">EQUIPO</h2>				</div>
 				</div>
+<div class="filtro-ciudad" role="group" aria-label="Elegir ciudad"><button type="button" data-c="lugo" aria-pressed="true">Lugo</button><button type="button" data-c="coruna" aria-pressed="false">A Coruña</button></div>
 				<section class="elementor-section elementor-inner-section elementor-element elementor-element-183416ac elementor-section-boxed elementor-section-height-default elementor-section-height-default wpr-particle-no wpr-jarallax-no wpr-parallax-no wpr-sticky-section-no wpr-column-slider-no wpr-equal-height-no" data-id="183416ac" data-element_type="section" data-e-type="section">
 						<div class="elementor-container elementor-column-gap-default">
-					<div data-perfil="manuel-lameiro" class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-100f0c5e" data-id="100f0c5e" data-element_type="column" data-e-type="column">
+					<div data-ciudad="lugo coruna" data-perfil="manuel-lameiro" class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-100f0c5e" data-id="100f0c5e" data-element_type="column" data-e-type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
 						<div class="elementor-element elementor-element-79653fc wpr-team-member-divider-center wpr-team-member-social-media-center elementor-widget elementor-widget-wpr-team-member" data-id="79653fc" data-element_type="widget" data-e-type="widget" data-widget_type="wpr-team-member.default">
 				<div class="elementor-widget-container">
@@ -857,7 +860,7 @@ PRÁCTICAS EN EL ESPACIO</h2>				</div>
 			<h3 class="wpr-member-name">Manuel Lameiro</h3>
 							<div class="wpr-member-divider"></div>
 			
-							<div class="wpr-member-job">Psicología Humanista</div>
+							<div class="wpr-member-job">Psicología humanista y transpersonal</div>
 			
 			
 						
@@ -889,7 +892,7 @@ PRÁCTICAS EN EL ESPACIO</h2>				</div>
 				</div>
 					</div>
 		</div>
-				<div data-perfil="lucia-martinez" class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-54269393" data-id="54269393" data-element_type="column" data-e-type="column">
+				<div data-ciudad="lugo" data-perfil="lucia-martinez" class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-54269393" data-id="54269393" data-element_type="column" data-e-type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
 						<div class="elementor-element elementor-element-31c668ca wpr-team-member-divider-center wpr-team-member-social-media-center elementor-widget elementor-widget-wpr-team-member" data-id="31c668ca" data-element_type="widget" data-e-type="widget" data-widget_type="wpr-team-member.default">
 				<div class="elementor-widget-container">
@@ -937,7 +940,7 @@ PRÁCTICAS EN EL ESPACIO</h2>				</div>
 				</div>
 					</div>
 		</div>
-				<div data-perfil="yoga-barbara-carbajal" class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-b4e66dc" data-id="b4e66dc" data-element_type="column" data-e-type="column">
+				<div data-ciudad="lugo" data-perfil="yoga-barbara-carbajal" class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-b4e66dc" data-id="b4e66dc" data-element_type="column" data-e-type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
 						<div class="elementor-element elementor-element-61de7e4 wpr-team-member-divider-center wpr-team-member-social-media-center elementor-widget elementor-widget-wpr-team-member" data-id="61de7e4" data-element_type="widget" data-e-type="widget" data-widget_type="wpr-team-member.default">
 				<div class="elementor-widget-container">
@@ -983,7 +986,7 @@ PRÁCTICAS EN EL ESPACIO</h2>				</div>
 				</div>
 					</div>
 		</div>
-				<div data-perfil="ana-andrade" class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-cb04f87" data-id="cb04f87" data-element_type="column" data-e-type="column">
+				<div data-ciudad="lugo" data-perfil="ana-andrade" class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-cb04f87" data-id="cb04f87" data-element_type="column" data-e-type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
 						<div class="elementor-element elementor-element-a8bcbb8 wpr-team-member-divider-center wpr-team-member-social-media-center elementor-widget elementor-widget-wpr-team-member" data-id="a8bcbb8" data-element_type="widget" data-e-type="widget" data-widget_type="wpr-team-member.default">
 				<div class="elementor-widget-container">
@@ -1033,7 +1036,7 @@ PRÁCTICAS EN EL ESPACIO</h2>				</div>
 		</section>
 				<section class="elementor-section elementor-inner-section elementor-element elementor-element-edd4c39 elementor-section-boxed elementor-section-height-default elementor-section-height-default wpr-particle-no wpr-jarallax-no wpr-parallax-no wpr-sticky-section-no wpr-column-slider-no wpr-equal-height-no" data-id="edd4c39" data-element_type="section" data-e-type="section">
 						<div class="elementor-container elementor-column-gap-default">
-					<div data-perfil="roberto-linares" class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-4437aaf" data-id="4437aaf" data-element_type="column" data-e-type="column">
+					<div data-ciudad="lugo" data-perfil="roberto-linares" class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-4437aaf" data-id="4437aaf" data-element_type="column" data-e-type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
 						<div class="elementor-element elementor-element-4fa01f6 wpr-team-member-divider-center wpr-team-member-social-media-center elementor-widget elementor-widget-wpr-team-member" data-id="4fa01f6" data-element_type="widget" data-e-type="widget" data-widget_type="wpr-team-member.default">
 				<div class="elementor-widget-container">
@@ -1077,7 +1080,7 @@ PRÁCTICAS EN EL ESPACIO</h2>				</div>
 				</div>
 					</div>
 		</div>
-				<div data-perfil="hayat-lanouar" class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-4e73a2a" data-id="4e73a2a" data-element_type="column" data-e-type="column">
+				<div data-ciudad="lugo" data-perfil="hayat-lanouar" class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-4e73a2a" data-id="4e73a2a" data-element_type="column" data-e-type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
 						<div class="elementor-element elementor-element-d1125ad wpr-team-member-divider-center wpr-team-member-social-media-center elementor-widget elementor-widget-wpr-team-member" data-id="d1125ad" data-element_type="widget" data-e-type="widget" data-widget_type="wpr-team-member.default">
 				<div class="elementor-widget-container">
@@ -1125,7 +1128,7 @@ PRÁCTICAS EN EL ESPACIO</h2>				</div>
 				</div>
 					</div>
 		</div>
-				<div data-perfil="maria-sonoterapia" class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-e818d8b" data-id="e818d8b" data-element_type="column" data-e-type="column">
+				<div data-ciudad="lugo" data-perfil="maria-sonoterapia" class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-e818d8b" data-id="e818d8b" data-element_type="column" data-e-type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
 						<div class="elementor-element elementor-element-f028ee1 wpr-team-member-divider-center wpr-team-member-social-media-center elementor-widget elementor-widget-wpr-team-member" data-id="f028ee1" data-element_type="widget" data-e-type="widget" data-widget_type="wpr-team-member.default">
 				<div class="elementor-widget-container">
@@ -1173,7 +1176,7 @@ PRÁCTICAS EN EL ESPACIO</h2>				</div>
 				</div>
 					</div>
 		</div>
-				<div data-perfil="rocio-quinteiro" class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-e818d8b" data-id="e818d8b" data-element_type="column" data-e-type="column">
+				<div data-ciudad="coruna" data-perfil="rocio-quinteiro" class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-e818d8b" data-id="e818d8b" data-element_type="column" data-e-type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
 						<div class="elementor-element elementor-element-f028ee1 wpr-team-member-divider-center wpr-team-member-social-media-center elementor-widget elementor-widget-wpr-team-member" data-id="f028ee1" data-element_type="widget" data-e-type="widget" data-widget_type="wpr-team-member.default">
 				<div class="elementor-widget-container">
@@ -1216,7 +1219,7 @@ PRÁCTICAS EN EL ESPACIO</h2>				</div>
 					</div>
 		</section>
 				<section class="elementor-section elementor-inner-section elementor-element elementor-element-edd4c39 fila-perfiles-nuevos elementor-section-boxed elementor-section-height-default elementor-section-height-default wpr-particle-no wpr-jarallax-no wpr-parallax-no wpr-sticky-section-no wpr-column-slider-no wpr-equal-height-no" data-id="edd4c39" data-element_type="section" data-e-type="section">
-						<div class="elementor-container elementor-column-gap-default"><div data-perfil="elisabet-ros" class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-e818d8b" data-id="e818d8b" data-element_type="column" data-e-type="column">
+						<div class="elementor-container elementor-column-gap-default"><div data-ciudad="lugo" data-perfil="elisabet-ros" class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-e818d8b" data-id="e818d8b" data-element_type="column" data-e-type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
 						<div class="elementor-element elementor-element-f028ee1 wpr-team-member-divider-center wpr-team-member-social-media-center elementor-widget elementor-widget-wpr-team-member" data-id="f028ee1" data-element_type="widget" data-e-type="widget" data-widget_type="wpr-team-member.default">
 				<div class="elementor-widget-container">
@@ -1253,7 +1256,7 @@ PRÁCTICAS EN EL ESPACIO</h2>				</div>
 					</div>
 				</div>
 					</div>
-		</div><div data-perfil="mari-alves" class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-e818d8b" data-id="e818d8b" data-element_type="column" data-e-type="column">
+		</div><div data-ciudad="lugo" data-perfil="mari-alves" class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-e818d8b" data-id="e818d8b" data-element_type="column" data-e-type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
 						<div class="elementor-element elementor-element-f028ee1 wpr-team-member-divider-center wpr-team-member-social-media-center elementor-widget elementor-widget-wpr-team-member" data-id="f028ee1" data-element_type="widget" data-e-type="widget" data-widget_type="wpr-team-member.default">
 				<div class="elementor-widget-container">
@@ -1291,7 +1294,7 @@ PRÁCTICAS EN EL ESPACIO</h2>				</div>
 				</div>
 					</div>
 		</div>
-				<div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-576028d" data-id="576028d" data-element_type="column" data-e-type="column">
+				<div data-ciudad="lugo coruna" class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-576028d" data-id="576028d" data-element_type="column" data-e-type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
 						<div class="elementor-element elementor-element-dc1ca16 wpr-team-member-divider-center elementor-widget elementor-widget-wpr-team-member" data-id="dc1ca16" data-element_type="widget" data-e-type="widget" data-widget_type="wpr-team-member.default">
 				<div class="elementor-widget-container">
